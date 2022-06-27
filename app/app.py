@@ -48,16 +48,11 @@ app.jinja_env.filters['datetime'] = format_datetime
 @app.route('/')
 def index():
   return render_template('pages/home.html')
-
-
 #  Venues
 #  ----------------------------------------------------------------
-
 @app.route('/venues')
 def venues():
-
   locations = Venue.query.distinct(Venue.city, Venue.state).all()
-
   data = []
   try:
     for location in locations:
@@ -70,9 +65,9 @@ def venues():
       venue_data = Venue.query.filter(Venue.city == location.city, Venue.state == location.state).all()
       for venue in venue_data:
         temp_data = {
-          'id' : venue.id,
-          'name' : venue.name,
-          'num_upcoming_shows' : len(list(filter(lambda x: x.start_time > datetime.today(), venue.shows )))
+          'id': venue.id,
+          'name': venue.name,
+          'num_upcoming_shows': len(list(filter(lambda x: x.start_time > datetime.today(), venue.shows )))
         }
         venues.append(temp_data)
       temporary_data['venues'] = venues
@@ -212,15 +207,7 @@ def create_venue_submission():
   finally:
     db.session.close()
     return render_template('pages/home.html')
-
-@app.route('/venues/<venue_id>', methods=['DELETE'])
-def delete_venue(venue_id):
-  pass
-
-  # BONUS CHALLENGE: Implement a button to delete a Venue on a Venue Page, have it so that
-  # clicking that button delete it from the db then redirect the user to the homepage
   
-
 #  Artists
 #  ----------------------------------------------------------------
 @app.route('/artists')
@@ -535,7 +522,7 @@ def shows():
 
 @app.route('/shows/create')
 def create_shows():
-  # renders form. do not touch.
+  # renders form
   form = ShowForm()
   return render_template('forms/new_show.html', form=form)
 
